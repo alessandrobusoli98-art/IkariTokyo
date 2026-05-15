@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>IkariTokyo — Ordine confermato</title>
+  <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+  <link rel="apple-touch-icon" href="assets/favicon.jpg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: var(--cream);
+    }
+
+    /* ── NAV (minimal) ── */
+    .succ-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 52px;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      padding: 0 24px;
+    }
+    html.dark .succ-nav { border-bottom-color: rgba(255,255,255,0.07); }
+    .succ-nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--dark);
+    }
+    .succ-nav-logo img { width: 28px; height: 28px; object-fit: contain; }
+    .succ-nav-logo span {
+      font-family: "PPEditorialNew", serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── MAIN ── */
+    .succ-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px 80px;
+    }
+
+    .succ-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+    }
+    html.dark .succ-icon { background: #fff; }
+    .succ-icon svg { color: #fff; }
+    html.dark .succ-icon svg { color: #000; }
+
+    .succ-title {
+      font-family: "PPEditorialNew", serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--dark);
+      margin: 0 0 16px;
+      line-height: 1.1;
+    }
+
+    .succ-sub {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--mid);
+      max-width: 420px;
+      margin: 0 auto 36px;
+    }
+
+    .succ-order-id {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--mid);
+      margin-bottom: 40px;
+    }
+    .succ-order-id strong {
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    .succ-btn {
+      display: inline-block;
+      padding: 16px 36px;
+      background: #000;
+      color: #fff;
+      font-family: "PPNeueMontreal", sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+    .succ-btn:hover { background: #222; }
+    html.dark .succ-btn { background: #fff; color: #000; }
+    html.dark .succ-btn:hover { background: #e0e0e0; }
+
+    /* ── FOOTER ── */
+    .succ-footer {
+      text-align: center;
+      padding: 20px 24px calc(20px + env(safe-area-inset-bottom, 0px));
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+    html.dark .succ-footer { border-top-color: rgba(255,255,255,0.07); }
+  </style>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+  <nav class="succ-nav">
+    <a href="index.html" class="succ-nav-logo">
+      <img src="assets/logo.png" alt="IkariTokyo">
+      <span>IkariTokyo</span>
+    </a>
+  </nav>
+
+  <main class="succ-main">
+    <div class="succ-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+
+    <h1 class="succ-title">Ordine confermato!</h1>
+    <p class="succ-sub">
+      Grazie per il tuo acquisto. Riceverai una email di conferma a breve con i dettagli della spedizione.
+    </p>
+
+    <p class="succ-order-id" id="succOrderId"></p>
+
+    <a href="index.html" class="succ-btn">Continua a fare shopping</a>
+  </main>
+
+  <footer class="succ-footer">
+    © 2025 IKARITOKYO — TUTTI I DIRITTI RISERVATI
+  </footer>
+
+  <script>
+    /* Clear cart after successful payment */
+    localStorage.removeItem('ikari-cart');
+
+    /* Show session ID if present */
+    const params    = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id');
+    if (sessionId) {
+      const el = document.getElementById('succOrderId');
+      el.innerHTML = `Riferimento ordine: <strong>${sessionId.slice(-12).toUpperCase()}</strong>`;
+    }
+
+    /* Dark mode */
+    if (localStorage.getItem('ikari-theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</body>
+</html>

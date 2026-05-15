@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>IkariTokyo — Chi Siamo</title>
+  <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+  <link rel="apple-touch-icon" href="assets/favicon.jpg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="about.css">
+  <script>if(sessionStorage.getItem('ikari_preloaded'))document.documentElement.classList.add('no-preloader');</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body class="hero-active">
+
+  <!-- ══ PRELOADER ══════════════════════════════════════════ -->
+  <div id="preloader">
+    <div class="preloader-img-wrap">
+      <img class="preloader-img" id="preloaderImg" src="" alt="">
+    </div>
+    <span class="preloader-brand">IkariTokyo</span>
+  </div>
+
+  <!-- ══ NAV ══════════════════════════════════════════════ -->
+  <header class="nav" id="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.png" alt="IkariTokyo" class="nav-logo-img nav-logo-light">
+      <img src="assets/logo-dark.png" alt="IkariTokyo" class="nav-logo-img nav-logo-dark">
+      <span class="nav-logo-text">IkariTokyo</span>
+    </a>
+    <div class="nav-center">
+      <span id="navLabel">CHI SIAMO</span>
+    </div>
+    <div class="nav-right">
+      <a href="index.html#prodotti" class="nav-link">ACQUISTA ORA</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambia tema">
+        <svg class="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <defs>
+            <mask id="moonMask">
+              <rect width="100%" height="100%" fill="white"/>
+              <circle class="moon-cutout" cx="33" cy="0" r="9" fill="black"/>
+            </mask>
+          </defs>
+          <circle class="sun-body" cx="12" cy="12" r="5" fill="currentColor" stroke="none" mask="url(#moonMask)"/>
+          <g class="sun-rays">
+            <line x1="12" y1="1"  x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="1"  y1="12" x2="3"  y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="5.64"  y1="5.64"  x2="4.22"  y2="4.22"/>
+            <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+            <line x1="5.64"  y1="18.36" x2="4.22"  y2="19.78"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          </g>
+        </svg>
+      </button>
+      <button class="nav-link nav-cart-btn" id="cartToggle" aria-label="Apri carrello">
+        CARRELLO <span class="cart-count-badge" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ══ CART ══════════════════════════════════════════════ -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-sidebar" id="cartSidebar" aria-label="Carrello">
+    <div class="cart-header">
+      <h2 class="cart-title">IL MIO CARRELLO</h2>
+      <button class="cart-close-btn" id="cartClose" aria-label="Chiudi carrello">CHIUDI</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Il tuo carrello è vuoto.</p>
+    </div>
+    <div class="cart-footer" id="cartFooter">
+      <div class="cart-total-row">
+        <span>SUBTOTALE</span>
+        <span id="cartTotal">€0</span>
+      </div>
+      <div class="cart-shipping-row">
+        <span>Spedizione</span>
+        <span>CALCOLATA AL CHECKOUT</span>
+      </div>
+      <a href="checkout.html" class="btn-primary btn-full" style="display:flex;align-items:center;justify-content:center;text-decoration:none">ACQUISTA</a>
+    </div>
+  </aside>
+
+  <!-- ══ HERO ══════════════════════════════════════════════ -->
+  <section class="ab-hero" data-section="hero">
+    <div class="ab-hero-img">
+      <img src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_100/assets/images/t-shirt-landscape/gym-zoro.png"
+           alt="IkariTokyo — Chi siamo">
+    </div>
+    <div class="ab-hero-overlay"></div>
+    <div class="ab-hero-content">
+      <span class="ab-hero-eyebrow">DA TOKYO CON PASSIONE — FONDATO IN ITALIA</span>
+      <h1 class="ab-hero-title">UNA MARCA<br>NATA<br>DALL'ANIME.</h1>
+      <div class="ab-hero-scroll">SCORRI PER SCOPRIRE</div>
+    </div>
+  </section>
+
+  <!-- ══ MANIFESTO ═════════════════════════════════════════ -->
+  <section class="ab-manifesto">
+    <div class="ab-manifesto-inner">
+      <span class="ab-section-label">IL NOSTRO MANIFESTO</span>
+      <p class="ab-manifesto-text">
+        "Ikari" in giapponese significa <em>rabbia, intensità, passione</em>.
+        È quel fuoco che senti quando il tuo personaggio preferito non si arrende mai —
+        quella scintilla che ti porta avanti anche nei momenti più duri.
+        Noi quella scintilla vogliamo metterla addosso.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ SPLIT — STORIA ════════════════════════════════════ -->
+  <section class="ab-split">
+    <div class="ab-split-img">
+      <img src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/ts-rengoku-life.png"
+           alt="IkariTokyo — La nostra storia" loading="lazy">
+    </div>
+    <div class="ab-split-panel">
+      <span class="ab-section-label">LA NOSTRA STORIA</span>
+      <h2 class="ab-split-title">NATI IN ITALIA,<br>CRESCIUTI<br>CON L'ANIME.</h2>
+      <p class="ab-split-body">
+        Tutto è cominciato con una domanda semplice: perché non esisteva in Italia
+        un brand di streetwear che parlasse davvero agli appassionati di anime?
+        Non magliette stampate a caso — ma pezzi di design, con estetica,
+        qualità e rispetto per le storie che amiamo.
+      </p>
+      <p class="ab-split-body">
+        IkariTokyo è la risposta. Nata dall'amore per i manga e l'anime culture,
+        costruita per chi vuole esprimere quella passione con stile —
+        ogni giorno, non solo al cosplay.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ TICKER ════════════════════════════════════════════ -->
+  <div class="ab-ticker" aria-hidden="true">
+    <div class="ab-ticker-track">
+      <span class="ab-ticker-item">NARUTO<span>✦</span></span>
+      <span class="ab-ticker-item">ONE PIECE<span>✦</span></span>
+      <span class="ab-ticker-item">JUJUTSU KAISEN<span>✦</span></span>
+      <span class="ab-ticker-item">DEMON SLAYER<span>✦</span></span>
+      <span class="ab-ticker-item">ATTACK ON TITAN<span>✦</span></span>
+      <span class="ab-ticker-item">CHAINSAW MAN<span>✦</span></span>
+      <span class="ab-ticker-item">DRAGON BALL<span>✦</span></span>
+      <span class="ab-ticker-item">BLEACH<span>✦</span></span>
+      <span class="ab-ticker-item">SOLO LEVELING<span>✦</span></span>
+      <span class="ab-ticker-item">FRIEREN<span>✦</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="ab-ticker-item">NARUTO<span>✦</span></span>
+      <span class="ab-ticker-item">ONE PIECE<span>✦</span></span>
+      <span class="ab-ticker-item">JUJUTSU KAISEN<span>✦</span></span>
+      <span class="ab-ticker-item">DEMON SLAYER<span>✦</span></span>
+      <span class="ab-ticker-item">ATTACK ON TITAN<span>✦</span></span>
+      <span class="ab-ticker-item">CHAINSAW MAN<span>✦</span></span>
+      <span class="ab-ticker-item">DRAGON BALL<span>✦</span></span>
+      <span class="ab-ticker-item">BLEACH<span>✦</span></span>
+      <span class="ab-ticker-item">SOLO LEVELING<span>✦</span></span>
+      <span class="ab-ticker-item">FRIEREN<span>✦</span></span>
+    </div>
+  </div>
+
+  <!-- ══ SPLIT — PRODOTTI (reversed) ════════════════════════ -->
+  <section class="ab-split ab-split--rev">
+    <div class="ab-split-img">
+      <img src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/ts-zoroblack-life.png"
+           alt="IkariTokyo — I nostri prodotti" loading="lazy">
+    </div>
+    <div class="ab-split-panel">
+      <span class="ab-section-label">I NOSTRI PRODOTTI</span>
+      <h2 class="ab-split-title">QUALITÀ CHE<br>SI SENTE,<br>DESIGN CHE<br>SI VEDE.</h2>
+      <p class="ab-split-body">
+        Ogni pezzo è pensato come un tributo — non una licenza, non una stampa
+        generica. Lavoriamo su cotoni premium, tagli oversize curati,
+        e grafiche originali che parlano direttamente alla community.
+      </p>
+      <p class="ab-split-body">
+        T-shirt a €35. Felpe a €65. Prezzi onesti per prodotti che durano.
+      </p>
+      <a href="index.html#prodotti" class="bracketed-btn" style="margin-top:12px;display:inline-block">VEDI LA COLLEZIONE</a>
+    </div>
+  </section>
+
+  <!-- ══ VALUES ════════════════════════════════════════════ -->
+  <section class="ab-values">
+    <div class="ab-values-header">
+      <h2 class="ab-values-title">PERCHÉ SCEGLIERE IKARITOKYO</h2>
+      <p class="ab-values-sub">
+        Tre principi che guidano ogni decisione — dal design alla spedizione.
+      </p>
+    </div>
+    <div class="ab-values-grid">
+      <div class="ab-value-card">
+        <span class="ab-value-num">01</span>
+        <h3 class="ab-value-title">Design Originale</h3>
+        <p class="ab-value-body">
+          Nessuna stampa generica. Ogni grafica nasce da un processo creativo
+          dedicato, pensato per rispettare i personaggi e colpire chi li ama.
+          Arte che vale la pena indossare.
+        </p>
+      </div>
+      <div class="ab-value-card">
+        <span class="ab-value-num">02</span>
+        <h3 class="ab-value-title">Materiali Premium</h3>
+        <p class="ab-value-body">
+          Cotone pesante, tagli oversize comodi, stampe che resistono al tempo.
+          Ogni prodotto viene testato prima di entrare in collezione —
+          perché ci vestiamo con le stesse cose che vendiamo.
+        </p>
+      </div>
+      <div class="ab-value-card">
+        <span class="ab-value-num">03</span>
+        <h3 class="ab-value-title">Community Prima di Tutto</h3>
+        <p class="ab-value-body">
+          IkariTokyo non è solo un brand — è una community di appassionati.
+          Ogni feedback conta, ogni suggerimento viene ascoltato.
+          Cresciamo insieme, un personaggio alla volta.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EDITORIAL GALLERY ══════════════════════════════════ -->
+  <div class="ab-gallery">
+    <a class="ab-gallery-item" href="index.html#prodotti">
+      <img src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/ts-chainsaw-W.png"
+           alt="Chainsaw Man T-Shirt" loading="lazy">
+      <span class="ab-gallery-caption">T-SHIRT — €35</span>
+    </a>
+    <a class="ab-gallery-item" href="index.html#prodotti">
+      <img src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/hd-goku-W.png"
+           alt="Goku Black Hoodie" loading="lazy">
+      <span class="ab-gallery-caption">FELPA — €65</span>
+    </a>
+    <a class="ab-gallery-item" href="index.html#prodotti">
+      <img src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/hd-sololeveling-W.png"
+           alt="Solo Leveling Hoodie" loading="lazy">
+      <span class="ab-gallery-caption">FELPA — €65</span>
+    </a>
+  </div>
+
+  <!-- ══ CTA ════════════════════════════════════════════════ -->
+  <section class="ab-cta">
+    <h2 class="ab-cta-title">PRONTO A PORTARE IL TUO ANIME PREFERITO CON TE?</h2>
+    <a href="index.html#prodotti" class="ab-cta-btn">
+      SCOPRI LA COLLEZIONE →
+    </a>
+  </section>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-brand-row">
+      <div class="footer-logo-wrap">
+        <img src="assets/logo.png" alt="IkariTokyo" class="footer-logo-img">
+      </div>
+      <div class="footer-tagline">
+        <p>IKARITOKYO<br>UN'ESPRESSIONE MODERNA DELL'ANIME</p>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>INDICE DEL SITO</h4>
+        <a href="index.html#prodotti">ACQUISTA ORA</a>
+        <a href="index.html">HOME</a>
+        <a href="about.html">CHI SIAMO</a>
+        <a href="#">CONTATTACI</a>
+      </div>
+      <div class="footer-col">
+        <h4>SOCIAL</h4>
+        <a href="#">INSTAGRAM</a>
+        <a href="https://www.tiktok.com/@egovtm25?_r=1&_t=ZS-96KcJic6U4d" target="_blank" rel="noopener">TIKTOK</a>
+      </div>
+      <div class="footer-col">
+        <h4>CONTATTACI</h4>
+        <a href="#">INFO@IKARITOKYO.COM</a>
+      </div>
+      <div class="footer-col">
+        <h4>LEGALE</h4>
+        <a href="#">PRIVACY POLICY</a>
+        <a href="#">RIMBORSI</a>
+        <a href="#">SPEDIZIONE</a>
+        <a href="#">TERMINI DI SERVIZIO</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>TUTTI I DIRITTI RISERVATI _ IKARI©2025</span>
+      <span>WEBSITE BY RYA</span>
+    </div>
+  </footer>
+
+  <!-- ══ TOAST ══════════════════════════════════════════════ -->
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

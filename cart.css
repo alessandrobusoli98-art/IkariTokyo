@@ -1,0 +1,337 @@
+/* ── CART PAGE ───────────────────────────────────────────── */
+
+.cart-page {
+  min-height: calc(100vh - 200px);
+  padding-top: 92px;
+  padding-bottom: 80px;
+  background: var(--cream);
+}
+
+.cart-page-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* HEADER */
+.cart-page-header {
+  margin-bottom: 48px;
+}
+.cart-back-link {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--mid);
+  margin-bottom: 20px;
+  transition: color var(--t1);
+}
+.cart-back-link:hover { color: var(--dark); }
+.cart-page-title {
+  font-family: "PPEditorialNew", serif;
+  font-weight: 700;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--dark);
+  margin: 0 0 10px;
+}
+.cart-page-count {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--mid);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* EMPTY STATE */
+.cart-empty-state {
+  text-align: center;
+  padding: 80px 0;
+}
+.cart-empty-title {
+  font-family: "PPEditorialNew", serif;
+  font-size: 28px;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+.cart-empty-text {
+  font-size: 13px;
+  color: var(--mid);
+  margin-bottom: 28px;
+}
+
+/* CONTENT GRID */
+.cart-page-content {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* ITEMS LIST */
+.cart-page-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-page-item {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 24px;
+  padding: 24px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  align-items: start;
+}
+.cart-page-item:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+html.dark .cart-page-item { border-top-color: rgba(255, 255, 255, 0.08); }
+html.dark .cart-page-item:last-child { border-bottom-color: rgba(255, 255, 255, 0.08); }
+
+.cart-page-item-img {
+  aspect-ratio: 3/4;
+  background: rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  border-radius: 4px;
+}
+.cart-page-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cart-page-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.cart-page-item-name {
+  font-family: "PPNeueMontreal", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--dark);
+  text-transform: uppercase;
+  margin: 0;
+}
+.cart-page-item-meta {
+  font-size: 12px;
+  color: var(--mid);
+  letter-spacing: 0.04em;
+}
+.cart-page-item-price-mobile {
+  display: none;
+}
+
+.cart-page-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.cart-qty-control {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+}
+html.dark .cart-qty-control { border-color: rgba(255, 255, 255, 0.15); }
+.cart-qty-btn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--dark);
+  transition: background var(--t1);
+}
+.cart-qty-btn:hover { background: rgba(0, 0, 0, 0.06); }
+html.dark .cart-qty-btn:hover { background: rgba(255, 255, 255, 0.06); }
+.cart-qty-value {
+  min-width: 28px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.cart-page-item-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--mid);
+  text-transform: uppercase;
+  transition: color var(--t1);
+  padding: 0;
+}
+.cart-page-item-remove:hover { color: var(--red); }
+
+.cart-page-item-price {
+  font-family: "PPNeueMontreal", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dark);
+  white-space: nowrap;
+}
+
+/* SUMMARY */
+.cart-page-summary { position: sticky; top: 92px; }
+.cart-summary-card {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 12px;
+  padding: 28px;
+}
+html.dark .cart-summary-card { background: rgba(255, 255, 255, 0.05); }
+
+.cart-summary-title {
+  font-family: "PPNeueMontreal", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--dark);
+  margin: 0 0 24px;
+  text-transform: uppercase;
+}
+
+.cart-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  font-size: 13px;
+  color: var(--dark);
+}
+.cart-summary-row-muted { color: var(--mid); font-size: 12px; }
+.cart-summary-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 16px 0;
+}
+html.dark .cart-summary-divider { background: rgba(255, 255, 255, 0.1); }
+
+.cart-summary-row-total {
+  font-family: "PPNeueMontreal", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+.cart-summary-row-total > div {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.cart-summary-currency {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--mid);
+  letter-spacing: 0.1em;
+}
+
+.cart-checkout-btn {
+  width: 100%;
+  background: var(--dark);
+  color: var(--cream);
+  font-family: "PPNeueMontreal", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  min-height: 56px;
+  transition: opacity var(--t1);
+}
+.cart-checkout-btn:hover:not(:disabled) { opacity: 0.85; }
+.cart-checkout-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.cart-secure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--mid);
+  margin: 18px 0 14px;
+  letter-spacing: 0.04em;
+}
+
+.cart-pay-methods {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.cart-pay-methods span {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--mid);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 4px 8px;
+  text-transform: uppercase;
+}
+html.dark .cart-pay-methods span { border-color: rgba(255, 255, 255, 0.15); }
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .cart-page-inner { padding: 0 32px; }
+  .cart-page-content { gap: 40px; }
+}
+
+@media (max-width: 768px) {
+  .cart-page { padding-top: 80px; padding-bottom: 56px; }
+  .cart-page-inner { padding: 0 16px; }
+  .cart-page-header { margin-bottom: 32px; }
+
+  .cart-page-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .cart-page-summary { position: static; }
+
+  .cart-page-item {
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+    padding: 18px 0;
+  }
+  .cart-page-item-price {
+    display: none;
+  }
+  .cart-page-item-price-mobile {
+    display: inline-block;
+    font-family: "PPNeueMontreal", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-top: 4px;
+  }
+  .cart-page-item-actions { margin-top: 4px; }
+  .cart-page-item-name { font-size: 13px; }
+  .cart-page-item-meta { font-size: 11px; }
+
+  .cart-summary-card { padding: 22px 20px; }
+  .cart-checkout-btn { min-height: 52px; font-size: 12px; }
+}
+
+@media (max-width: 479px) {
+  .cart-page-item { grid-template-columns: 88px 1fr; gap: 14px; }
+  .cart-qty-btn { width: 28px; height: 28px; }
+}

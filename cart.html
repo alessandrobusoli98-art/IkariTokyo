@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>IkariTokyo — Carrello</title>
+  <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+  <link rel="apple-touch-icon" href="assets/favicon.jpg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cart.css">
+  <script>if(sessionStorage.getItem('ikari_preloaded'))document.documentElement.classList.add('no-preloader');</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════════ -->
+  <header class="nav" id="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.png" alt="IkariTokyo" class="nav-logo-img nav-logo-light">
+      <img src="assets/logo-dark.png" alt="IkariTokyo" class="nav-logo-img nav-logo-dark">
+      <span class="nav-logo-text">IkariTokyo</span>
+    </a>
+    <div class="nav-center">
+      <span id="navLabel">CARRELLO</span>
+    </div>
+    <div class="nav-right">
+      <a href="index.html#prodotti" class="nav-link">ACQUISTA ORA</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambia tema">
+        <svg class="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <defs>
+            <mask id="moonMask">
+              <rect width="100%" height="100%" fill="white"/>
+              <circle class="moon-cutout" cx="33" cy="0" r="9" fill="black"/>
+            </mask>
+          </defs>
+          <circle class="sun-body" cx="12" cy="12" r="5" fill="currentColor" stroke="none" mask="url(#moonMask)"/>
+          <g class="sun-rays">
+            <line x1="12" y1="1"  x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="1"  y1="12" x2="3"  y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="5.64"  y1="5.64"  x2="4.22"  y2="4.22"/>
+            <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+            <line x1="5.64"  y1="18.36" x2="4.22"  y2="19.78"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          </g>
+        </svg>
+      </button>
+      <span class="nav-link" style="cursor:default">
+        CARRELLO <span class="cart-count-badge" id="cartCount">0</span>
+      </span>
+    </div>
+  </header>
+
+  <!-- ══ CART PAGE ════════════════════════════════════════ -->
+  <main class="cart-page" id="cartPage">
+
+    <div class="cart-page-inner">
+
+      <!-- HEADER -->
+      <div class="cart-page-header">
+        <a href="index.html#tutti" class="cart-back-link">← CONTINUA A FARE ACQUISTI</a>
+        <h1 class="cart-page-title">IL TUO CARRELLO</h1>
+        <p class="cart-page-count" id="cartPageCount"></p>
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div class="cart-empty-state" id="cartEmptyState" style="display:none">
+        <p class="cart-empty-title">Il tuo carrello è vuoto.</p>
+        <p class="cart-empty-text">Esplora la collezione e trova il tuo capo preferito.</p>
+        <a href="index.html#tutti" class="bracketed-btn">VEDI I PRODOTTI</a>
+      </div>
+
+      <!-- CONTENT (items + summary) -->
+      <div class="cart-page-content" id="cartPageContent">
+
+        <!-- LEFT — items list -->
+        <section class="cart-page-items" id="cartPageItems">
+          <!-- populated by cart.js -->
+        </section>
+
+        <!-- RIGHT — order summary -->
+        <aside class="cart-page-summary">
+          <div class="cart-summary-card">
+            <h2 class="cart-summary-title">RIEPILOGO ORDINE</h2>
+
+            <div class="cart-summary-row">
+              <span>Subtotale</span>
+              <span id="cartSubtotal">€0</span>
+            </div>
+            <div class="cart-summary-row cart-summary-row-muted">
+              <span>Spedizione</span>
+              <span>Calcolata al checkout</span>
+            </div>
+
+            <div class="cart-summary-divider"></div>
+
+            <div class="cart-summary-row cart-summary-row-total">
+              <span>TOTALE</span>
+              <div>
+                <span class="cart-summary-currency">EUR</span>
+                <span id="cartTotal">€0</span>
+              </div>
+            </div>
+
+            <button class="cart-checkout-btn" id="cartCheckoutBtn">PROCEDI CON L'ACQUISTO</button>
+
+            <p class="cart-secure">
+              <svg width="12" height="14" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="6" width="10" height="8" rx="1.5"/>
+                <path d="M3.5 6V4a2.5 2.5 0 0 1 5 0v2"/>
+              </svg>
+              Pagamento sicuro con Stripe
+            </p>
+
+            <div class="cart-pay-methods">
+              <span>VISA</span>
+              <span>MC</span>
+              <span>AMEX</span>
+              <span> Pay</span>
+              <span>G Pay</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-brand-row">
+      <div class="footer-tagline">
+        <p>IKARITOKYO<br>UN'ESPRESSIONE MODERNA DELL'ANIME</p>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>INDICE DEL SITO</h4>
+        <a href="index.html#prodotti">ACQUISTA ORA</a>
+        <a href="index.html">HOME</a>
+        <a href="about.html">CHI SIAMO</a>
+        <a href="#">CONTATTACI</a>
+      </div>
+      <div class="footer-col">
+        <h4>SOCIAL</h4>
+        <a href="#">INSTAGRAM</a>
+        <a href="https://www.tiktok.com/@egovtm25?_r=1&_t=ZS-96KcJic6U4d" target="_blank" rel="noopener">TIKTOK</a>
+      </div>
+      <div class="footer-col">
+        <h4>CONTATTACI</h4>
+        <a href="#">INFO@IKARITOKYO.COM</a>
+      </div>
+      <div class="footer-col">
+        <h4>LEGALE</h4>
+        <a href="privacy-policy.html">PRIVACY POLICY</a>
+        <a href="rimborsi.html">RIMBORSI</a>
+        <a href="spedizione.html">SPEDIZIONE</a>
+        <a href="termini-servizio.html">TERMINI DI SERVIZIO</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>TUTTI I DIRITTI RISERVATI _ IKARI©2025</span>
+      <span>WEBSITE BY RYA</span>
+    </div>
+  </footer>
+
+  <!-- ══ TOAST ══════════════════════════════════════════════ -->
+  <div class="toast" id="toast"></div>
+
+  <script src="cart.js"></script>
+</body>
+</html>

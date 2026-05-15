@@ -1,0 +1,11 @@
+{
+  "name": "ikaritokyo",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
+    "cloudinary": "^2.10.0",
+    "stripe": "^16.0.0"
+  }
+}

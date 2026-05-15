@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>IkariTokyo — Abbigliamento Anime</title>
+  <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+  <link rel="apple-touch-icon" href="assets/favicon.jpg">
+  <link rel="stylesheet" href="style.css">
+  <script>if(sessionStorage.getItem('ikari_preloaded'))document.documentElement.classList.add('no-preloader');</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body class="hero-active">
+
+  <!-- ══ PRELOADER ══════════════════════════════════════════ -->
+  <div id="preloader">
+    <div class="preloader-img-wrap">
+      <img class="preloader-img" id="preloaderImg" src="" alt="">
+    </div>
+    <span class="preloader-brand">IkariTokyo</span>
+  </div>
+
+  <!-- ══ NAV ══════════════════════════════════════════════ -->
+  <header class="nav" id="nav">
+    <a href="#" class="nav-logo">
+      <img src="assets/logo.png" alt="IkariTokyo" class="nav-logo-img nav-logo-light">
+      <img src="assets/logo-dark.png" alt="IkariTokyo" class="nav-logo-img nav-logo-dark">
+      <span class="nav-logo-text">IkariTokyo</span>
+    </a>
+    <div class="nav-center" id="navCenter">
+      <span id="navLabel">STORE</span>
+    </div>
+    <div class="nav-right">
+      <a href="#prodotti" class="nav-link">ACQUISTA ORA</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambia tema">
+        <svg class="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <defs>
+            <mask id="moonMask">
+              <rect width="100%" height="100%" fill="white"/>
+              <circle class="moon-cutout" cx="33" cy="0" r="9" fill="black"/>
+            </mask>
+          </defs>
+          <circle class="sun-body" cx="12" cy="12" r="5" fill="currentColor" stroke="none" mask="url(#moonMask)"/>
+          <g class="sun-rays">
+            <line x1="12" y1="1"  x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="1"  y1="12" x2="3"  y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="5.64"  y1="5.64"  x2="4.22"  y2="4.22"/>
+            <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+            <line x1="5.64"  y1="18.36" x2="4.22"  y2="19.78"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          </g>
+        </svg>
+      </button>
+      <button class="nav-link nav-cart-btn" id="cartToggle" aria-label="Apri carrello">
+        CARRELLO <span class="cart-count-badge" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ══ CART ══════════════════════════════════════════════ -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-sidebar" id="cartSidebar" aria-label="Carrello">
+    <div class="cart-header">
+      <h2 class="cart-title">IL MIO CARRELLO</h2>
+      <button class="cart-close-btn" id="cartClose" aria-label="Chiudi carrello">CHIUDI</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Il tuo carrello è vuoto.</p>
+    </div>
+    <div class="cart-footer" id="cartFooter">
+      <div class="cart-total-row">
+        <span>SUBTOTALE</span>
+        <span id="cartTotal">€0</span>
+      </div>
+      <div class="cart-shipping-row">
+        <span>Spedizione</span>
+        <span>CALCOLATA AL CHECKOUT</span>
+      </div>
+      <a href="cart.html" class="btn-primary btn-full" style="display:flex;align-items:center;justify-content:center;text-decoration:none">VAI AL CARRELLO</a>
+    </div>
+  </aside>
+
+  <!-- ══ HERO SLIDESHOW ════════════════════════════════════ -->
+  <section class="hero" id="hero" data-section="hero">
+    <div class="hero-slides" id="heroSlides">
+      <div class="hero-slide is-active" data-img="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_100/assets/images/t-shirt-landscape/cyberpunk-view.png" data-img-mobile="assets/images/t-shirt-landscape/cyberpunk-view-9-16.png"></div>
+      <div class="hero-slide" data-img="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_100/assets/images/t-shirt-landscape/gym-zoro.png" data-img-mobile="assets/images/t-shirt-landscape/Gym-zoro-9-16.png"></div>
+      <div class="hero-slide" data-img="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_100/assets/images/t-shirt-landscape/still-life-metro-odaiba.png" data-img-mobile="assets/images/t-shirt-landscape/still-life-metro-odaiba-9-16.png"></div>
+      <div class="hero-slide" data-img="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_100/assets/images/t-shirt-landscape/Luffy-gear-5.png" data-img-mobile="assets/images/t-shirt-landscape/Luffy-gear-5-9-16.png"></div>
+    </div>
+    <div class="hero-overlay"></div>
+
+    <!-- Slide numbers row -->
+    <div class="slide-nums" id="slideNums">
+      <button class="slide-num is-active" data-slide="0">01</button>
+      <button class="slide-num" data-slide="1">02</button>
+      <button class="slide-num" data-slide="2">03</button>
+      <button class="slide-num" data-slide="3">04</button>
+    </div>
+
+    <!-- Bottom text -->
+    <div class="hero-bottom">
+      <div class="hero-bottom-left">
+        <a href="#prodotti" class="hero-cta-label">ACQUISTA ORA</a>
+        <span class="hero-sub-label">ESPLORA LA PRIMA COLLEZIONE</span>
+      </div>
+      <div class="hero-progress-wrap">
+        <div class="hero-progress-bar" id="heroProgress"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FEATURED PRODUCTS — marquee ══════════════════════ -->
+  <div class="featured-header" id="prodotti" data-section="prodotti">
+    <h2 class="section-heading featured-heading">TOP SELLER</h2>
+  </div>
+  <section class="featured">
+    <div class="featured-track" id="featuredTrack">
+      <!-- injected by JS -->
+    </div>
+  </section>
+
+  <!-- View all -->
+  <div class="view-all-bar">
+    <a href="#tutti" class="bracketed-btn">VEDI TUTTI I PRODOTTI</a>
+  </div>
+
+  <!-- ══ THREE-COLUMN EDITORIAL ════════════════════════════ -->
+  <section class="three-col" id="storia" data-section="storia">
+    <a class="col-block" href="about.html">
+      <span class="col-label">I NOSTRI PRODOTTI</span>
+      <div class="col-img-wrap">
+        <img src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/ts-chainsaw-W.png" alt="I nostri prodotti" loading="lazy">
+      </div>
+    </a>
+    <a class="col-block" href="about.html">
+      <span class="col-label">LA NOSTRA STORIA</span>
+      <div class="col-img-wrap">
+        <img src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/hd-goku-W.png" alt="La nostra storia" loading="lazy">
+      </div>
+    </a>
+    <a class="col-block" href="about.html">
+      <span class="col-label">LA NOSTRA COMMUNITY</span>
+      <div class="col-img-wrap">
+        <img src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/hd-sololeveling-W.png" alt="La nostra community" loading="lazy">
+      </div>
+    </a>
+  </section>
+
+  <!-- ══ FULL-BLEED GALLERY SLIDESHOW ══════════════════════ -->
+  <section class="gallery-hero" id="galleria" data-section="galleria">
+    <div class="gallery-slide-wrap" id="galleryWrap">
+      <img class="gallery-slide-img" id="galleryImg"
+        src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/hd-sololeveling-W.png" alt="IkariTokyo">
+    </div>
+    <div class="gallery-overlay"></div>
+    <div class="gallery-corner-left">IKARI_26</div>
+    <div class="gallery-corner-right" id="galleryNum">05</div>
+    <button class="gallery-next-btn bracketed-btn" id="galleryNext">SUCCESSIVO</button>
+  </section>
+
+  <!-- ══ ALL PRODUCTS GRID ══════════════════════════════════ -->
+  <section class="all-products" id="tutti" data-section="tutti">
+    <div class="all-products-inner">
+      <div class="all-products-header">
+        <h2 class="section-heading">LA COLLEZIONE</h2>
+        <div class="filter-tabs" id="filterTabs">
+          <button class="filter-tab is-active" data-filter="all">TUTTO</button>
+          <button class="filter-tab" data-filter="tshirt">T-SHIRT</button>
+          <button class="filter-tab" data-filter="hoodie">FELPE</button>
+        </div>
+      </div>
+      <div class="all-products-grid" id="allProductsGrid">
+        <!-- injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════ -->
+  <footer class="footer" id="contatti" data-section="contatti">
+    <div class="footer-brand-row">
+      <div class="footer-logo-wrap">
+        <img src="assets/logo.png" alt="IkariTokyo" class="footer-logo-img">
+      </div>
+      <div class="footer-tagline">
+        <p>IKARITOKYO<br>UN'ESPRESSIONE MODERNA DELL'ANIME</p>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>INDICE DEL SITO</h4>
+        <a href="#prodotti">ACQUISTA ORA</a>
+        <a href="index.html">HOME</a>
+        <a href="about.html">CHI SIAMO</a>
+        <a href="#">CONTATTACI</a>
+      </div>
+      <div class="footer-col">
+        <h4>SOCIAL</h4>
+        <a href="#">INSTAGRAM</a>
+        <a href="https://www.tiktok.com/@egovtm25?_r=1&_t=ZS-96KcJic6U4d" target="_blank" rel="noopener">TIKTOK</a>
+      </div>
+      <div class="footer-col">
+        <h4>CONTATTACI</h4>
+        <a href="#">INFO@IKARITOKYO.COM</a>
+      </div>
+      <div class="footer-col">
+        <h4>LEGALE</h4>
+        <a href="privacy-policy.html">PRIVACY POLICY</a>
+        <a href="rimborsi.html">RIMBORSI</a>
+        <a href="spedizione.html">SPEDIZIONE</a>
+        <a href="termini-servizio.html">TERMINI DI SERVIZIO</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>TUTTI I DIRITTI RISERVATI _ IKARI©2025</span>
+      <span>WEBSITE BY RYA</span>
+    </div>
+  </footer>
+
+  <!-- ══ SIZE MODAL ═════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" id="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-product-name" id="modalName"></h3>
+          <p class="modal-series" id="modalSeries"></p>
+        </div>
+        <button class="cart-close-btn" id="modalClose" aria-label="Chiudi">✕</button>
+      </div>
+      <div class="modal-img-wrap">
+        <img class="modal-img" id="modalImg" src="" alt="">
+        <div class="modal-color-toggle" id="modalColorToggle"></div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-price" id="modalPrice"></div>
+        <div class="size-section">
+          <label class="size-label">SELEZIONA LA TAGLIA</label>
+          <div class="size-grid" id="sizeGrid"></div>
+        </div>
+        <button class="btn-primary btn-full" id="modalAddBtn" disabled>SELEZIONA UNA TAGLIA</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LIGHTBOX ══════════════════════════════════════════ -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <button class="lightbox-prev" id="lightboxPrev">←</button>
+    <div class="lightbox-img-wrap">
+      <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    </div>
+    <button class="lightbox-next" id="lightboxNext">→</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </div>
+
+  <!-- ══ NEWSLETTER POPUP ══════════════════════════════════ -->
+  <div class="popup-overlay" id="popupOverlay"></div>
+  <div class="popup" id="newsletterPopup" role="dialog" aria-modal="true">
+    <button class="popup-close" id="popupClose" aria-label="Chiudi">✕</button>
+    <div class="popup-img">
+      <img src="https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/ts-rengoku-life.png" alt="IkariTokyo">
+    </div>
+    <div class="popup-panel">
+      <h2 class="popup-title">ENTRA A FAR PARTE<br>DELLA COMMUNITY<br>IKARITOKYO.</h2>
+      <form class="popup-form" id="popupForm">
+        <input type="text" class="popup-input" placeholder="NOME COGNOME" autocomplete="name">
+        <input type="email" class="popup-input" placeholder="EMAIL" autocomplete="email" required>
+        <button type="submit" class="popup-submit">INVIA</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══ TOAST ══════════════════════════════════════════════ -->
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
