@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>IkariTokyo — Prodotto</title>
+  <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
+  <link rel="apple-touch-icon" href="assets/favicon.jpg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="product.css">
+  <script>if(sessionStorage.getItem('ikari_preloaded'))document.documentElement.classList.add('no-preloader');</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+  <!-- ══ PRELOADER ══════════════════════════════════════════ -->
+  <div id="preloader">
+    <div class="preloader-img-wrap">
+      <img class="preloader-img" id="preloaderImg" src="" alt="">
+    </div>
+    <span class="preloader-brand">IkariTokyo</span>
+  </div>
+
+  <!-- ══ NAV ══════════════════════════════════════════════ -->
+  <header class="nav" id="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.png" alt="IkariTokyo" class="nav-logo-img nav-logo-light">
+      <img src="assets/logo-dark.png" alt="IkariTokyo" class="nav-logo-img nav-logo-dark">
+      <span class="nav-logo-text">IkariTokyo</span>
+    </a>
+    <div class="nav-center">
+      <span id="navLabel">STORE</span>
+    </div>
+    <div class="nav-right">
+      <a href="index.html#prodotti" class="nav-link">ACQUISTA ORA</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambia tema">
+        <svg class="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <defs>
+            <mask id="moonMask">
+              <rect width="100%" height="100%" fill="white"/>
+              <circle class="moon-cutout" cx="33" cy="0" r="9" fill="black"/>
+            </mask>
+          </defs>
+          <circle class="sun-body" cx="12" cy="12" r="5" fill="currentColor" stroke="none" mask="url(#moonMask)"/>
+          <g class="sun-rays">
+            <line x1="12" y1="1"  x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="1"  y1="12" x2="3"  y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="5.64"  y1="5.64"  x2="4.22"  y2="4.22"/>
+            <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+            <line x1="5.64"  y1="18.36" x2="4.22"  y2="19.78"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          </g>
+        </svg>
+      </button>
+      <button class="nav-link nav-cart-btn" id="cartToggle" aria-label="Apri carrello">
+        CARRELLO <span class="cart-count-badge" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ══ CART ══════════════════════════════════════════════ -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-sidebar" id="cartSidebar" aria-label="Carrello">
+    <div class="cart-header">
+      <h2 class="cart-title">IL MIO CARRELLO</h2>
+      <button class="cart-close-btn" id="cartClose" aria-label="Chiudi carrello">CHIUDI</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Il tuo carrello è vuoto.</p>
+    </div>
+    <div class="cart-footer" id="cartFooter">
+      <div class="cart-total-row">
+        <span>SUBTOTALE</span>
+        <span id="cartTotal">€0</span>
+      </div>
+      <div class="cart-shipping-row">
+        <span>Spedizione</span>
+        <span>CALCOLATA AL CHECKOUT</span>
+      </div>
+      <a href="cart.html" class="btn-primary btn-full" style="display:flex;align-items:center;justify-content:center;text-decoration:none">VAI AL CARRELLO</a>
+    </div>
+  </aside>
+
+  <!-- ══ PRODUCT LAYOUT ════════════════════════════════════ -->
+  <main class="product-main">
+
+    <!-- LEFT — scrolling image stack / mobile carousel -->
+    <div class="product-images" id="productImages">
+      <!-- populated by product.js -->
+    </div>
+
+    <!-- Mobile carousel dot indicators -->
+    <div class="prod-img-dots" id="prodDots"></div>
+
+    <!-- RIGHT — sticky info panel -->
+    <aside class="product-info-panel">
+
+      <!-- Scrollable content -->
+      <div class="prod-panel-content">
+        <a href="index.html#tutti" class="prod-back-link">← TORNA ALLA COLLEZIONE</a>
+
+        <span class="prod-badge" id="productBadge">T-SHIRT</span>
+
+        <div class="prod-title-row">
+          <h1 class="prod-name" id="productName"></h1>
+          <div class="prod-price" id="productPrice"></div>
+        </div>
+
+        <p class="prod-series" id="productSeries"></p>
+        <p class="prod-desc" id="productDesc"></p>
+
+        <!-- Accordion: Garment Details -->
+        <div class="accordion">
+          <button class="accordion-trigger">
+            <span>DETTAGLI CAPO</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              100% cotone ringspun pettinato<br>
+              Grammatura: 180 g/m²<br>
+              Collo a costine con nastro copricostola<br>
+              Orli a doppia cucitura<br>
+              Stampa serigrafica ad alta definizione
+            </p>
+          </div>
+        </div>
+
+        <!-- Accordion: Wash Care -->
+        <div class="accordion">
+          <button class="accordion-trigger">
+            <span>ISTRUZIONI DI LAVAGGIO</span>
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-body">
+            <p>
+              Lavare a 30°C a rovescio<br>
+              Non candeggiare<br>
+              Non asciugare in asciugatrice<br>
+              Stirare a bassa temperatura sul rovescio<br>
+              Lavaggio a secco non consigliato
+            </p>
+          </div>
+        </div>
+
+        <!-- Color chip (informational) -->
+        <div class="prod-color-section" id="colorSection">
+          <label class="size-label">COLORE</label>
+          <div class="prod-color-toggle" id="colorToggle"></div>
+        </div>
+      </div>
+
+      <!-- Bottom bar: SIZE trigger + ADD TO CART -->
+      <div class="prod-bottom-bar">
+        <!-- Glass size picker — floats above the bar -->
+        <div class="prod-size-drawer" id="sizeDrawer">
+          <span class="prod-size-drawer-label">SELEZIONA LA TAGLIA</span>
+          <div class="size-grid" id="sizeGrid"></div>
+        </div>
+        <button class="prod-size-trigger" id="sizeTrigger" aria-expanded="false">
+          <span>SIZE: <span id="selectedSizeDisplay"></span></span>
+          <span class="prod-size-icon" id="sizeIcon">+</span>
+        </button>
+        <button class="prod-add-btn" id="addToCartBtn" disabled>AGGIUNGI AL CARRELLO</button>
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- ══ EDITORIAL FULL-BLEED ═══════════════════════════════ -->
+  <section class="prod-editorial">
+    <img id="editorialImg" src="" alt="">
+  </section>
+
+  <!-- ══ COMPLETE THE LOOK ══════════════════════════════════ -->
+  <section class="complete-look">
+    <div class="complete-look-header">
+      <h2 class="section-heading">COMPLETE THE LOOK</h2>
+    </div>
+    <div class="complete-look-grid" id="completeLookGrid">
+      <!-- populated by product.js -->
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ═════════════════════════════════════════════ -->
+  <footer class="footer" id="contatti">
+    <div class="footer-brand-row">
+      <div class="footer-logo-wrap" style="display:none">
+        <img src="assets/logo.png" alt="IkariTokyo" class="footer-logo-img">
+      </div>
+      <div class="footer-tagline">
+        <p>IKARITOKYO<br>UN'ESPRESSIONE MODERNA DELL'ANIME</p>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>INDICE DEL SITO</h4>
+        <a href="index.html#prodotti">ACQUISTA ORA</a>
+        <a href="index.html">HOME</a>
+        <a href="#">CHI SIAMO</a>
+        <a href="#">CONTATTACI</a>
+      </div>
+      <div class="footer-col">
+        <h4>SOCIAL</h4>
+        <a href="#">INSTAGRAM</a>
+        <a href="https://www.tiktok.com/@egovtm25?_r=1&_t=ZS-96KcJic6U4d" target="_blank" rel="noopener">TIKTOK</a>
+      </div>
+      <div class="footer-col">
+        <h4>CONTATTACI</h4>
+        <a href="#">INFO@IKARITOKYO.COM</a>
+      </div>
+      <div class="footer-col">
+        <h4>LEGALE</h4>
+        <a href="privacy-policy.html">PRIVACY POLICY</a>
+        <a href="rimborsi.html">RIMBORSI</a>
+        <a href="spedizione.html">SPEDIZIONE</a>
+        <a href="termini-servizio.html">TERMINI DI SERVIZIO</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>TUTTI I DIRITTI RISERVATI _ IKARI©2025</span>
+      <span>WEBSITE BY <a href="https://www.raiseyouraudience.com" target="_blank" rel="noopener">RYA</a></span>
+    </div>
+  </footer>
+
+  <!-- ══ TOAST ══════════════════════════════════════════════ -->
+  <div class="toast" id="toast"></div>
+
+  <script src="product.js"></script>
+</body>
+</html>

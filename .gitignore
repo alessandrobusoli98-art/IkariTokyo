@@ -5,3 +5,6 @@ node_modules/
 .claude/
 oddritualgolf-design/
 .DS_Store
+.DS_Store
+._*
+node_modules

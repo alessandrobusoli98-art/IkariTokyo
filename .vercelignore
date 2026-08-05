@@ -1,0 +1,16 @@
+# Non deployare il materiale oddritualgolf (regola cliente)
+oddritualgolf-design/
+
+# File di sistema macOS / exFAT
+.DS_Store
+._*
+
+# Sviluppo / VCS / config locali
+.git
+.claude/
+node_modules
+*.ai
+*.pdf
+
+# Sorgenti non deployati (template editabile per la function)
+_src/

@@ -1,4 +1,10 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/product.html", "destination": "/product", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/product", "destination": "/api/product" }
+  ]
 }
