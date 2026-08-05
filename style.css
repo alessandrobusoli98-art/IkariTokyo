@@ -1151,6 +1151,11 @@ html.dark .filter-tab.is-active { background: var(--red); border-color: var(--re
   display: flex;
   justify-content: space-between;
 }
+.footer-bottom a {
+  color: inherit;
+  transition: color var(--t1);
+}
+.footer-bottom a:hover { color: var(--red); }
 
 /* ── TOAST ─────────────────────────────────────────────── */
 .toast {
