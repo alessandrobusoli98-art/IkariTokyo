@@ -553,13 +553,13 @@ function startMarquee(pool) {
   el.addEventListener('touchend',   endDrag, { passive: true });
   el.addEventListener('touchcancel', endDrag, { passive: true });
 
-  /* Don't burn frames while the section is off-screen or the tab is hidden. */
-  document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(entries => {
-      entries.forEach(en => en.isIntersecting ? start() : stop());
-    }, { rootMargin: '200px' }).observe(el.parentElement || el);
-  }
+  /* The loop deliberately runs for the life of the page. Gating it on an
+     IntersectionObserver looked like a free saving, but the banner starts
+     below the fold: the observer fired once with isIntersecting false, the
+     loop stopped, and on a slow connection no later callback ever arrived —
+     so the banner sat frozen for good. Browsers already suspend
+     requestAnimationFrame for hidden tabs, and moving ten cards costs
+     nothing, so there is nothing left worth gating. */
 
   let resizeTimer;
   window.addEventListener('resize', () => {
