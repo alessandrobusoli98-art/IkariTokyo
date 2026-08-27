@@ -420,6 +420,7 @@ function createFeatCard(p) {
 }
 
 const SECONDS_PER_CARD = 3.5; // pacing: how long one card takes to cross
+const LIVE_CARDS = 10;        // cards held in the track, on every device
 let featDragMoved = false;    // set while dragging, so a drag never navigates
 
 /* Recycling marquee.
@@ -465,7 +466,12 @@ function startMarquee(pool) {
     el.removeChild(probe);
     if (!cardW || !isFinite(cardW)) cardW = window.innerWidth * 0.3 + GAP_PX;
 
-    const needed = Math.ceil(window.innerWidth / cardW) + 2;
+    // Keep LIVE_CARDS in the track on every device, but never enough of them
+    // to walk back into WebKit's texture limit on a high-DPR screen.
+    const dpr = window.devicePixelRatio || 1;
+    const minNeeded = Math.ceil(window.innerWidth / cardW) + 2;
+    const maxSafe = Math.max(minNeeded, Math.floor(12000 / (cardW * dpr)));
+    const needed = Math.min(Math.max(LIVE_CARDS, minNeeded), maxSafe);
     for (let i = 0; i < needed; i++) {
       const card = createFeatCard(at(i));
       cards.push(card);
