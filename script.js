@@ -456,7 +456,8 @@ function startMarquee(pool) {
     el.style.animation = 'none'; // the CSS keyframe no longer drives this
     el.innerHTML = '';
     cards = [];
-    headIdx = 0;
+    // headIdx is deliberately kept: a rebuild resumes near where the banner
+    // was rather than snapping back to the first product.
     offset = 0;
 
     // Measure a real card rather than deriving it from the vw units in CSS.
@@ -473,7 +474,7 @@ function startMarquee(pool) {
     const maxSafe = Math.max(minNeeded, Math.floor(12000 / (cardW * dpr)));
     const needed = Math.min(Math.max(LIVE_CARDS, minNeeded), maxSafe);
     for (let i = 0; i < needed; i++) {
-      const card = createFeatCard(at(i));
+      const card = createFeatCard(at(headIdx + i));
       cards.push(card);
       el.appendChild(card);
     }
@@ -548,8 +549,25 @@ function startMarquee(pool) {
   document.addEventListener('mouseleave', endDrag);
   window.addEventListener('blur', endDrag);
 
-  el.addEventListener('touchstart', e => beginDrag(e.touches[0].pageX), { passive: true });
-  el.addEventListener('touchmove',  e => moveDrag(e.touches[0].pageX),  { passive: true });
+  /* Decide the gesture's axis before hijacking it: a finger travelling down
+     the page is scrolling, not dragging the banner. Claiming every touch
+     paused the marquee for the whole of a vertical scroll. */
+  let tStartX = 0, tStartY = 0, tAxis = null;
+  el.addEventListener('touchstart', e => {
+    tStartX = e.touches[0].pageX;
+    tStartY = e.touches[0].pageY;
+    tAxis = null;
+  }, { passive: true });
+  el.addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    if (!tAxis) {
+      const dx = Math.abs(t.pageX - tStartX), dy = Math.abs(t.pageY - tStartY);
+      if (dx < 8 && dy < 8) return;
+      tAxis = dx > dy ? 'x' : 'y';
+      if (tAxis === 'x') beginDrag(tStartX);
+    }
+    if (tAxis === 'x') moveDrag(t.pageX);
+  }, { passive: true });
   el.addEventListener('touchend',   endDrag, { passive: true });
   el.addEventListener('touchcancel', endDrag, { passive: true });
 
@@ -561,8 +579,14 @@ function startMarquee(pool) {
      requestAnimationFrame for hidden tabs, and moving ten cards costs
      nothing, so there is nothing left worth gating. */
 
-  let resizeTimer;
+  /* Rebuild only when the width really changes. Phone browsers fire `resize`
+     every time the address bar collapses or expands while scrolling — only
+     the height moves, but rebuilding on those events restarted the banner
+     from the first card the instant the user touched the screen. */
+  let resizeTimer, lastW = window.innerWidth;
   window.addEventListener('resize', () => {
+    if (window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => { stop(); build(); start(); }, 200);
   });
