@@ -1,6 +1,8 @@
 /* ── PRELOADER ───────────────────────────────────────────── */
 (function () {
-  var CDN_PRE = 'https://res.cloudinary.com/do2eltwlu/image/upload/f_auto,q_90/assets/images/products/';
+  // Sized: the preloader shows this at min(240px, 56vw), so full-res costs
+  // ~3MB of the cold-load budget for no visible gain.
+  var CDN_PRE = 'https://res.cloudinary.com/do2eltwlu/image/upload/w_480,c_limit,f_auto,q_auto/assets/images/products/';
   var IMGS = [
     CDN_PRE + 'ts-rengoku-life.png',
     CDN_PRE + 'ts-zoroblack-life.png',
@@ -349,11 +351,14 @@ function buildFeaturedTrack() {
     card.className = 'feat-card';
     const isHoodie = p.cat === 'hoodie';
     const lifeImg  = p.imgLife || p.imgW || p.imgB;
-    // Eager-load the opening run so the banner is never blank on arrival.
-    const flatLoading = i < 6 ? 'eager' : 'lazy';
+    // No lazy-loading here: these images live inside a permanently animated
+    // container, and Safari never re-evaluates lazy candidates as a transform
+    // brings them into view — cards stayed blank until a later visit warmed
+    // the HTTP cache. Sized + f_auto they are ~50KB each, so eager is cheap.
+    // The hover image is fetched on demand instead (see below).
     card.innerHTML = `
-      <img class="feat-card-flat" src="${imgSrcSized(p.imgB, 900)}" alt="${p.name}" loading="${flatLoading}">
-      <img class="feat-card-life" src="${imgSrcSized(lifeImg, 900)}" alt="${p.name}" loading="lazy">
+      <img class="feat-card-flat" src="${imgSrcSized(p.imgB, 900)}" alt="${p.name}" loading="eager" decoding="async">
+      <img class="feat-card-life" data-src="${imgSrcSized(lifeImg, 900)}" alt="${p.name}" decoding="async">
       <div class="feat-card-type">${isHoodie ? 'FELPA' : 'T-SHIRT'}</div>
       <div class="feat-card-info">
         <div class="feat-card-name">${p.name}</div>
@@ -365,6 +370,16 @@ function buildFeaturedTrack() {
       </div>
     `;
     const arrow = card.querySelector('.feat-card-arrow');
+
+    /* Fetch the hover photo the first time it is actually needed */
+    const lifeEl = card.querySelector('.feat-card-life');
+    const loadLife = () => {
+      if (lifeEl && lifeEl.dataset.src) {
+        lifeEl.src = lifeEl.dataset.src;
+        delete lifeEl.dataset.src;
+      }
+    };
+    card.addEventListener('mouseenter', loadLife, { once: true });
 
     /* ── Touch (mobile): use touchend to beat the drag-scroll reset ── */
     let tapStartX = 0, touchMoved = false;
