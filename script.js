@@ -316,7 +316,25 @@ function initHero() {
     }, HERO_DURATION);
   }
 
-  resetProgress();
+  /* Hold the opening frame until the visitor is actually there.
+
+     A slide change repaints the full viewport, and the browser takes it as a
+     new Largest Contentful Paint candidate: rotating on a fixed 5s timer pinned
+     LCP at ~5.5s (measured; holding the first slide put it at 0.3s). Because
+     LCP stops updating at the first user gesture, starting the rotation from
+     that gesture means no slide change can ever become the LCP — and anyone
+     who scrolls or taps still gets the rotating hero as designed. */
+  let heroStarted = false;
+  function startHeroRotation() {
+    if (heroStarted) return;
+    heroStarted = true;
+    resetProgress();
+  }
+  ['pointerdown', 'touchstart', 'keydown', 'wheel', 'scroll'].forEach(ev =>
+    window.addEventListener(ev, startHeroRotation, { once: true, passive: true }));
+
+  /* Clicking a slide number is itself a gesture: let it take over from here. */
+  nums.forEach(btn => btn.addEventListener('click', startHeroRotation, { once: true }));
 }
 
 /* ── FEATURED TRACK — infinite marquee ──────────────────── */
