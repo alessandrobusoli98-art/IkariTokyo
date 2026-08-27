@@ -97,6 +97,12 @@
   --glass-w:    rgba(255, 255, 255, 0.10);
   --glass-wb:   rgba(255, 255, 255, 0.18);
   --glass-b:    rgba(0, 0, 0, 0.08);
+  /* Category chips (T-SHIRT / FELPA) sit on top of product photos, so the
+     backing follows the text: the studio shots are light in both themes, and
+     white type alone would vanish on them in dark mode. */
+  --tag-fg:     #2b2b2b;
+  --tag-bg:     rgba(255, 255, 255, 0.78);
+  --tag-border: rgba(0, 0, 0, 0.12);
   --ease:       cubic-bezier(0.32, 0.72, 0, 1);
   --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
   --t1: 150ms;
@@ -114,6 +120,9 @@ html.dark {
   --glass-w:  rgba(255,255,255,0.06);
   --glass-wb: rgba(255,255,255,0.10);
   --glass-b:  rgba(255,255,255,0.08);
+  --tag-fg:     #ffffff;
+  --tag-bg:     rgba(12, 12, 12, 0.55);
+  --tag-border: rgba(255, 255, 255, 0.28);
 }
 
 /* ── RESET ─────────────────────────────────────────────── */
@@ -711,11 +720,11 @@ html.dark .sun-rays {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 5px 10px;
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.25);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: var(--white);
+  color: var(--tag-fg);
   z-index: 3;
   opacity: 0;
   transition: opacity 300ms var(--ease);
@@ -966,11 +975,11 @@ html.dark .filter-tab.is-active { background: var(--red); border-color: var(--re
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 4px 8px;
-  background: var(--glass-w);
-  border: 1px solid var(--glass-wb);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: var(--white);
+  color: var(--tag-fg);
   z-index: 2;
 }
 .p-card-info {
