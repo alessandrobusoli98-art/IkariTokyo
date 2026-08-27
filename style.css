@@ -643,16 +643,14 @@ html.dark .sun-rays {
 .featured-heading {
   margin: 0;
 }
+/* Driven by requestAnimationFrame in script.js, which recycles cards so the
+   track never grows past a couple of screens. No `will-change` here on
+   purpose: it pinned the whole track into one composited layer, which past
+   WebKit's ~16384px texture limit rendered blank. */
 .featured-track {
   display: flex;
   gap: 12px;
-  will-change: transform;
-  animation: marqueeScroll 56s linear infinite;
   width: max-content;
-}
-@keyframes marqueeScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
 }
 
 .feat-card {

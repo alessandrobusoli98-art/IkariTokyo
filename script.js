@@ -338,18 +338,17 @@ function buildFeaturedTrack() {
     for (let k = 0; k < GAP && ri < rest.length; k++) mixed.push(rest[ri++]);
   }
 
-  // Cap the marquee: with the whole catalogue the track ran to ~64000px and
-  // lazy-loading could not keep pace with the scroll, so cards reached the
-  // viewport still blank and the banner read as empty and motionless.
   const featured = mixed.slice(0, FEATURED_COUNT);
 
-  // Duplicate for seamless infinite loop
-  const all = [...featured, ...featured];
+  startMarquee(featured);
+}
 
-  all.forEach((p, i) => {
-    const card = document.createElement('div');
-    card.className = 'feat-card';
-    const isHoodie = p.cat === 'hoodie';
+/* Build one card. Kept separate so the marquee can mint cards on demand
+   instead of laying the whole catalogue out at once. */
+function createFeatCard(p) {
+  const card = document.createElement('div');
+  card.className = 'feat-card';
+  const isHoodie = p.cat === 'hoodie';
     const lifeImg  = p.imgLife || p.imgW || p.imgB;
     // No lazy-loading here: these images live inside a permanently animated
     // container, and Safari never re-evaluates lazy candidates as a transform
@@ -411,87 +410,159 @@ function buildFeaturedTrack() {
 
     /* ── Desktop: plain click navigates ── */
     card.addEventListener('click', () => {
+      if (featDragMoved) return;
       if (!window.matchMedia('(hover: none)').matches) {
         location.href = 'product.html?id=' + p.id;
       }
     });
 
-    featuredTrack.appendChild(card);
-  });
-
-  enableDragScroll(featuredTrack);
+  return card;
 }
 
-const MARQUEE_DURATION = 56; // seconds — keep in sync with style.css .featured-track animation
+const SECONDS_PER_CARD = 3.5; // pacing: how long one card takes to cross
+let featDragMoved = false;    // set while dragging, so a drag never navigates
 
-function enableDragScroll(el) {
-  let isDown = false, startX, animX = 0;
+/* Recycling marquee.
 
-  function getCurrentTranslateX() {
-    const matrix = new DOMMatrix(window.getComputedStyle(el).transform);
-    return matrix.m41;
+   The previous version laid every card out in one flex track and animated it
+   with a CSS keyframe. That track ran to ~15000 CSS px — on a 2x display over
+   29000 device px, and on a phone (90vw cards, 3x) past 30000 — far beyond
+   WebKit's ~16384px texture limit, so Safari gave up rasterising it and the
+   banner rendered mostly blank on both desktop and mobile.
+
+   Here the track only ever holds enough cards to cover the viewport plus a
+   small buffer. Cards that leave on the left are moved to the end and refilled
+   with the next product, so the layer stays a couple of screens wide on every
+   device. */
+function startMarquee(pool) {
+  if (!pool.length) return;
+
+  const el = featuredTrack;
+  const GAP_PX = 12; // matches .featured-track gap in style.css
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let cards = [];      // live card elements, left to right
+  let headIdx = 0;     // pool index of cards[0]
+  let offset = 0;      // px scrolled within the leading card
+  let cardW = 0;
+  let rafId = null;
+  let lastTs = 0;
+  let dragging = false;
+
+  const at = i => pool[((i % pool.length) + pool.length) % pool.length];
+
+  function build() {
+    el.style.animation = 'none'; // the CSS keyframe no longer drives this
+    el.innerHTML = '';
+    cards = [];
+    headIdx = 0;
+    offset = 0;
+
+    // Measure a real card rather than deriving it from the vw units in CSS.
+    const probe = createFeatCard(pool[0]);
+    el.appendChild(probe);
+    cardW = probe.getBoundingClientRect().width + GAP_PX;
+    el.removeChild(probe);
+    if (!cardW || !isFinite(cardW)) cardW = window.innerWidth * 0.3 + GAP_PX;
+
+    const needed = Math.ceil(window.innerWidth / cardW) + 2;
+    for (let i = 0; i < needed; i++) {
+      const card = createFeatCard(at(i));
+      cards.push(card);
+      el.appendChild(card);
+    }
+    apply();
   }
 
-  /* Resume the marquee animation from a given pixel position */
-  function resumeFrom(x) {
-    const halfWidth = el.scrollWidth / 2;
-    if (!halfWidth) return;
-    const normalized = ((-x) % halfWidth + halfWidth) % halfWidth;
-    const elapsed = (normalized / halfWidth) * MARQUEE_DURATION;
-    el.style.transform = '';
-    el.style.animation = `marqueeScroll ${MARQUEE_DURATION}s linear -${elapsed}s infinite`;
+  const apply = () => { el.style.transform = `translate3d(${-offset}px,0,0)`; };
+
+  /* Keep `offset` inside one card width by recycling elements at either end. */
+  function normalize() {
+    let guard = 0;
+    while (offset >= cardW && guard++ < 50) {
+      cards.shift().remove();
+      const card = createFeatCard(at(headIdx + cards.length + 1));
+      cards.push(card);
+      el.appendChild(card);
+      headIdx++;
+      offset -= cardW;
+    }
+    while (offset < 0 && guard++ < 50) {
+      cards.pop().remove();
+      const card = createFeatCard(at(headIdx - 1));
+      cards.unshift(card);
+      el.insertBefore(card, el.firstChild);
+      headIdx--;
+      offset += cardW;
+    }
   }
 
-  /* Safety net: if a drag/press never gets a matching release (mouse let go
-     outside the window, or the page was restored from bfcache mid-drag),
-     the track would otherwise stay frozen at animation:'none' forever. */
-  function forceResume() {
-    if (!isDown) return;
-    isDown = false;
-    resumeFrom(getCurrentTranslateX());
+  function tick(ts) {
+    if (!lastTs) lastTs = ts;
+    const dt = Math.min((ts - lastTs) / 1000, 0.1); // ignore huge tab-switch gaps
+    lastTs = ts;
+    if (!dragging) {
+      offset += (cardW / SECONDS_PER_CARD) * dt;
+      normalize();
+      apply();
+    }
+    rafId = requestAnimationFrame(tick);
   }
-  window.addEventListener('blur', forceResume);
-  document.addEventListener('mouseleave', forceResume);
-  window.addEventListener('pageshow', e => {
-    if (e.persisted) forceResume();
+
+  function start() {
+    if (rafId || reduceMotion) return;
+    lastTs = 0;
+    rafId = requestAnimationFrame(tick);
+  }
+  function stop() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = null;
+  }
+
+  /* ── Drag / swipe ── */
+  let startX = 0, startOffset = 0;
+  const beginDrag = x => { dragging = true; startX = x; startOffset = offset; featDragMoved = false; };
+  const moveDrag = x => {
+    if (!dragging) return;
+    const dx = x - startX;
+    if (Math.abs(dx) > 6) featDragMoved = true;
+    offset = startOffset - dx;
+    normalize();
+    apply();
+  };
+  const endDrag = () => {
+    dragging = false;
+    // Clear after the click that follows mouseup has been dispatched.
+    setTimeout(() => { featDragMoved = false; }, 0);
+  };
+
+  el.addEventListener('mousedown', e => { e.preventDefault(); beginDrag(e.pageX); });
+  document.addEventListener('mousemove', e => { if (dragging) { e.preventDefault(); moveDrag(e.pageX); } });
+  document.addEventListener('mouseup', endDrag);
+  document.addEventListener('mouseleave', endDrag);
+  window.addEventListener('blur', endDrag);
+
+  el.addEventListener('touchstart', e => beginDrag(e.touches[0].pageX), { passive: true });
+  el.addEventListener('touchmove',  e => moveDrag(e.touches[0].pageX),  { passive: true });
+  el.addEventListener('touchend',   endDrag, { passive: true });
+  el.addEventListener('touchcancel', endDrag, { passive: true });
+
+  /* Don't burn frames while the section is off-screen or the tab is hidden. */
+  document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      entries.forEach(en => en.isIntersecting ? start() : stop());
+    }, { rootMargin: '200px' }).observe(el.parentElement || el);
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { stop(); build(); start(); }, 200);
   });
 
-  el.addEventListener('mousedown', e => {
-    isDown = true;
-    animX = getCurrentTranslateX();
-    el.style.transform = `translateX(${animX}px)`;
-    el.style.animation = 'none';
-    startX = e.pageX;
-  });
-  document.addEventListener('mouseup', () => {
-    if (!isDown) return;
-    isDown = false;
-    resumeFrom(getCurrentTranslateX());
-  });
-  document.addEventListener('mousemove', e => {
-    if (!isDown) return;
-    e.preventDefault();
-    const dx = e.pageX - startX;
-    el.style.transform = `translateX(${animX + dx}px)`;
-  });
-
-  // Touch
-  let touchStartX, touchAnimX, lastTouchDx = 0;
-  el.addEventListener('touchstart', e => {
-    touchAnimX = getCurrentTranslateX();
-    el.style.transform = `translateX(${touchAnimX}px)`;
-    el.style.animation = 'none';
-    touchStartX = e.touches[0].pageX;
-    lastTouchDx = 0;
-  }, { passive: true });
-  el.addEventListener('touchend', () => {
-    resumeFrom(touchAnimX + lastTouchDx);
-  }, { passive: true });
-  el.addEventListener('touchmove', e => {
-    const dx = e.touches[0].pageX - touchStartX;
-    lastTouchDx = dx;
-    el.style.transform = `translateX(${touchAnimX + dx}px)`;
-  }, { passive: true });
+  build();
+  start();
 }
 
 /* ── ALL PRODUCTS GRID ───────────────────────────────────── */
