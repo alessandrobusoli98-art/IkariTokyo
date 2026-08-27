@@ -647,7 +647,7 @@ html.dark .sun-rays {
   display: flex;
   gap: 12px;
   will-change: transform;
-  animation: marqueeScroll 500s linear infinite;
+  animation: marqueeScroll 250s linear infinite;
   width: max-content;
 }
 @keyframes marqueeScroll {

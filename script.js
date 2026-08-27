@@ -398,7 +398,7 @@ function buildFeaturedTrack() {
   enableDragScroll(featuredTrack);
 }
 
-const MARQUEE_DURATION = 500; // seconds — keep in sync with style.css .featured-track animation
+const MARQUEE_DURATION = 250; // seconds — keep in sync with style.css .featured-track animation
 
 function enableDragScroll(el) {
   let isDown = false, startX, animX = 0;
