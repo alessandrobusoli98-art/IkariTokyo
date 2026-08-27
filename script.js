@@ -318,6 +318,8 @@ const NEW_COLLECTION_IDS = ['ts-35','ts-36','ts-37','ts-38','ts-40','ts-41','ts-
 // (same pose/model photo, different shirt color) never sit next to each other.
 const NEW_COLLECTION_ORDER = ['ts-35','ts-40','ts-36','ts-46','ts-51','ts-38','ts-42','ts-55','ts-37','ts-47','ts-41','ts-48','ts-54','ts-43','ts-50','ts-45','ts-52','ts-53'];
 
+const FEATURED_COUNT = 16;
+
 function buildFeaturedTrack() {
   featuredTrack.innerHTML = '';
 
@@ -334,16 +336,23 @@ function buildFeaturedTrack() {
     for (let k = 0; k < GAP && ri < rest.length; k++) mixed.push(rest[ri++]);
   }
 
-  // Duplicate for seamless infinite loop
-  const all = [...mixed, ...mixed];
+  // Cap the marquee: with the whole catalogue the track ran to ~64000px and
+  // lazy-loading could not keep pace with the scroll, so cards reached the
+  // viewport still blank and the banner read as empty and motionless.
+  const featured = mixed.slice(0, FEATURED_COUNT);
 
-  all.forEach(p => {
+  // Duplicate for seamless infinite loop
+  const all = [...featured, ...featured];
+
+  all.forEach((p, i) => {
     const card = document.createElement('div');
     card.className = 'feat-card';
     const isHoodie = p.cat === 'hoodie';
     const lifeImg  = p.imgLife || p.imgW || p.imgB;
+    // Eager-load the opening run so the banner is never blank on arrival.
+    const flatLoading = i < 6 ? 'eager' : 'lazy';
     card.innerHTML = `
-      <img class="feat-card-flat" src="${imgSrcSized(p.imgB, 900)}" alt="${p.name}" loading="lazy">
+      <img class="feat-card-flat" src="${imgSrcSized(p.imgB, 900)}" alt="${p.name}" loading="${flatLoading}">
       <img class="feat-card-life" src="${imgSrcSized(lifeImg, 900)}" alt="${p.name}" loading="lazy">
       <div class="feat-card-type">${isHoodie ? 'FELPA' : 'T-SHIRT'}</div>
       <div class="feat-card-info">
@@ -398,7 +407,7 @@ function buildFeaturedTrack() {
   enableDragScroll(featuredTrack);
 }
 
-const MARQUEE_DURATION = 250; // seconds — keep in sync with style.css .featured-track animation
+const MARQUEE_DURATION = 56; // seconds — keep in sync with style.css .featured-track animation
 
 function enableDragScroll(el) {
   let isDown = false, startX, animX = 0;
