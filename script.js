@@ -80,11 +80,38 @@ const P = CDN + 'assets/images/products/';
 
 function imgSrc(path) { return path || ''; }
 
+/* Cap the Cloudinary delivery size for thumbnails that never need full-res
+   (e.g. the featured marquee) — the raw product photos are ~4-5MB each
+   unresized, which is why the marquee was slow to appear on first load. */
+function imgSrcSized(path, width) {
+  if (!path) return '';
+  return path.replace('f_auto,q_90/', `w_${width},c_limit,f_auto,q_90/`);
+}
+
 /* ── PRODUCTS ────────────────────────────────────────────── */
 const products = [
+  // NUOVA COLLEZIONE
+  { id:'ts-35', name:'Asta — Demon Form',         series:'Black Clover',          cat:'tshirt', price:35, imgB: P+'ts-astademon2-B.png',            imgW: P+'ts-astademon2-W.png',            sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-36', name:'Broly — Nera',              series:'Dragon Ball Super',     cat:'tshirt', price:35, imgB: P+'ts-brolyblack-B.png',            imgW: P+'ts-brolyblack-W.png',            sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-37', name:'Broly — Bianca',            series:'Dragon Ball Super',     cat:'tshirt', price:35, imgB: P+'ts-brolywhite-B.png',            imgW: P+'ts-brolywhite-W.png',            sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-38', name:'Chopper — Straw Hat Crew',  series:'One Piece',             cat:'tshirt', price:35, imgB: P+'ts-chopper2-B.png',              imgW: P+'ts-chopper2-W.png',              sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-40', name:'Deku — Full Cowl',          series:'My Hero Academia',      cat:'tshirt', price:35, imgB: P+'ts-dekufullcowl2-B.png',         imgW: P+'ts-dekufullcowl2-W.png',         sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-41', name:'One For All 100%',          series:'My Hero Academia',      cat:'tshirt', price:35, imgB: P+'ts-oneforall1002-B.png',         imgW: P+'ts-oneforall1002-W.png',         sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-42', name:'Escanor',                   series:'The Seven Deadly Sins', cat:'tshirt', price:35, imgB: P+'ts-escanor2-B.png',              imgW: P+'ts-escanor2-W.png',              sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-43', name:'Ichigo — Hollow Mode',      series:'Bleach',                cat:'tshirt', price:35, imgB: P+'ts-ichigohollow2-B.png',         imgW: P+'ts-ichigohollow2-W.png',         sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-45', name:'Luffy — Reaction',          series:'One Piece',             cat:'tshirt', price:35, imgB: P+'ts-luffyreaction2-B.png',        imgW: P+'ts-luffyreaction2-W.png',        sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-46', name:'Mahoraga',                  series:'Jujutsu Kaisen',        cat:'tshirt', price:35, imgB: P+'ts-mahoraga2-B.png',             imgW: P+'ts-mahoraga2-W.png',             sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-47', name:'Rengoku — Flame Hashira',   series:'Demon Slayer',          cat:'tshirt', price:35, imgB: P+'ts-rengokuflame2-B.png',         imgW: P+'ts-rengokuflame2-W.png',         sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-48', name:'Scout Regiment',            series:'Attack on Titan',       cat:'tshirt', price:35, imgB: P+'ts-scoutregiment2-B.png',        imgW: P+'ts-scoutregiment2-W.png',        sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-50', name:'Vegeta — Super Saiyan',     series:'Dragon Ball Super',     cat:'tshirt', price:35, imgB: P+'ts-vegetassj2-B.png',            imgW: P+'ts-vegetassj2-W.png',            sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-51', name:'Thunder Breathing — Nera',  series:'Demon Slayer',          cat:'tshirt', price:35, imgB: P+'ts-thunderbreathingblack-B.png', imgW: P+'ts-thunderbreathingblack-W.png', sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-52', name:'Magic Knight Captain',      series:'Black Clover',          cat:'tshirt', price:35, imgB: P+'ts-magicknightcaptain2-B.png',   imgW: P+'ts-magicknightcaptain2-W.png',   sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-53', name:'Zoro — Greatest Swordsman', series:'One Piece',             cat:'tshirt', price:35, imgB: P+'ts-zoroswordsman2-B.png',        imgW: P+'ts-zoroswordsman2-W.png',        sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-54', name:'Thunder Breathing — Bianca', series:'Demon Slayer',         cat:'tshirt', price:35, imgB: P+'ts-thunderbreathingwhite-B.png', imgW: P+'ts-thunderbreathingwhite-W.png', sizes:['XS','S','M','L','XL','XXL'] },
+  { id:'ts-55', name:'Gojo Satoru — The Honored One', series:'Jujutsu Kaisen',    cat:'tshirt', price:35, imgB: P+'ts-gojohonoredone-B.png',        imgW: P+'ts-gojohonoredone-W.png',        sizes:['XS','S','M','L','XL','XXL'] },
+
   // T-SHIRT
   { id:'ts-1',  name:'Gojo Satoru',       series:'Jujutsu Kaisen',         cat:'tshirt', price:35, imgB: P+'ts-gojo-B.png',          imgW: P+'ts-gojo-W.png',          sizes:['XS','S','M','L','XL','XXL'] },
-  { id:'ts-2',  name:'Gojo — Honored One',series:'Jujutsu Kaisen',         cat:'tshirt', price:35, imgB: P+'ts-gojohonored-B.png',    imgW: P+'ts-gojohonored-W.png',   sizes:['XS','S','M','L','XL','XXL'] },
   { id:'ts-3',  name:'Bakugo',            series:'My Hero Academia',        cat:'tshirt', price:35, imgB: P+'ts-bakugo-B.png',         imgW: P+'ts-bakugo-W.png',        sizes:['XS','S','M','L','XL','XXL'] },
   { id:'ts-4',  name:'Deku',              series:'My Hero Academia',        cat:'tshirt', price:35, imgB: P+'ts-deku-B.png',           imgW: P+'ts-deku-W.png',          sizes:['XS','S','M','L','XL','XXL'] },
   { id:'ts-5',  name:'Chainsaw Man',      series:'Chainsaw Man',            cat:'tshirt', price:35, imgB: P+'ts-chainsaw-B.png',       imgW: P+'ts-chainsaw-W.png',      sizes:['XS','S','M','L','XL','XXL'] },
@@ -286,11 +313,29 @@ function initHero() {
 }
 
 /* ── FEATURED TRACK — infinite marquee ──────────────────── */
+const NEW_COLLECTION_IDS = ['ts-35','ts-36','ts-37','ts-38','ts-40','ts-41','ts-42','ts-43','ts-45','ts-46','ts-47','ts-48','ts-50','ts-51','ts-52','ts-53','ts-54','ts-55'];
+// Hand-ordered so the two colorways of Broly and of Thunder Breathing
+// (same pose/model photo, different shirt color) never sit next to each other.
+const NEW_COLLECTION_ORDER = ['ts-35','ts-40','ts-36','ts-46','ts-51','ts-38','ts-42','ts-55','ts-37','ts-47','ts-41','ts-48','ts-54','ts-43','ts-50','ts-45','ts-52','ts-53'];
+
 function buildFeaturedTrack() {
   featuredTrack.innerHTML = '';
 
+  const newColl = NEW_COLLECTION_ORDER.map(id => products.find(p => p.id === id)).filter(Boolean);
+  const rest    = products.filter(p => !NEW_COLLECTION_IDS.includes(p.id));
+
+  // Mix: one new-collection card every few catalog cards, so the repeated
+  // stock-photo models in the new drop are diluted by the rest of the catalog.
+  const GAP = 3;
+  const mixed = [];
+  let ni = 0, ri = 0;
+  while (ni < newColl.length || ri < rest.length) {
+    if (ni < newColl.length) mixed.push(newColl[ni++]);
+    for (let k = 0; k < GAP && ri < rest.length; k++) mixed.push(rest[ri++]);
+  }
+
   // Duplicate for seamless infinite loop
-  const all = [...products, ...products];
+  const all = [...mixed, ...mixed];
 
   all.forEach(p => {
     const card = document.createElement('div');
@@ -298,8 +343,8 @@ function buildFeaturedTrack() {
     const isHoodie = p.cat === 'hoodie';
     const lifeImg  = p.imgLife || p.imgW || p.imgB;
     card.innerHTML = `
-      <img class="feat-card-flat" src="${imgSrc(p.imgB)}" alt="${p.name}" loading="lazy">
-      <img class="feat-card-life" src="${imgSrc(lifeImg)}" alt="${p.name}" loading="lazy">
+      <img class="feat-card-flat" src="${imgSrcSized(p.imgB, 900)}" alt="${p.name}" loading="lazy">
+      <img class="feat-card-life" src="${imgSrcSized(lifeImg, 900)}" alt="${p.name}" loading="lazy">
       <div class="feat-card-type">${isHoodie ? 'FELPA' : 'T-SHIRT'}</div>
       <div class="feat-card-info">
         <div class="feat-card-name">${p.name}</div>
@@ -353,6 +398,8 @@ function buildFeaturedTrack() {
   enableDragScroll(featuredTrack);
 }
 
+const MARQUEE_DURATION = 500; // seconds — keep in sync with style.css .featured-track animation
+
 function enableDragScroll(el) {
   let isDown = false, startX, animX = 0;
 
@@ -366,10 +413,24 @@ function enableDragScroll(el) {
     const halfWidth = el.scrollWidth / 2;
     if (!halfWidth) return;
     const normalized = ((-x) % halfWidth + halfWidth) % halfWidth;
-    const elapsed = (normalized / halfWidth) * 500;
+    const elapsed = (normalized / halfWidth) * MARQUEE_DURATION;
     el.style.transform = '';
-    el.style.animation = `marqueeScroll 500s linear -${elapsed}s infinite`;
+    el.style.animation = `marqueeScroll ${MARQUEE_DURATION}s linear -${elapsed}s infinite`;
   }
+
+  /* Safety net: if a drag/press never gets a matching release (mouse let go
+     outside the window, or the page was restored from bfcache mid-drag),
+     the track would otherwise stay frozen at animation:'none' forever. */
+  function forceResume() {
+    if (!isDown) return;
+    isDown = false;
+    resumeFrom(getCurrentTranslateX());
+  }
+  window.addEventListener('blur', forceResume);
+  document.addEventListener('mouseleave', forceResume);
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) forceResume();
+  });
 
   el.addEventListener('mousedown', e => {
     isDown = true;
