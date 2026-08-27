@@ -53,6 +53,16 @@
 
   <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
   <link rel="apple-touch-icon" href="assets/favicon.jpg">
+
+  <!-- Open the connection to the image CDN before the parser meets the first
+       image, and start the opening hero frame during parsing rather than after
+       script.js has run. -->
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link rel="preload" as="image" fetchpriority="high" media="(min-width: 769px)"
+        href="https://res.cloudinary.com/do2eltwlu/image/upload/w_1920,c_limit,f_auto,q_auto/assets/images/t-shirt-landscape/cyberpunk-view.png">
+  <link rel="preload" as="image" fetchpriority="high" media="(max-width: 768px)"
+        href="/_vercel/image?url=%2Fassets%2Fimages%2Ft-shirt-landscape%2Fcyberpunk-view-9-16.png&amp;w=1080&amp;q=75">
+
   <link rel="stylesheet" href="style.css">
   <script>if(sessionStorage.getItem('ikari_preloaded'))document.documentElement.classList.add('no-preloader');</script>
   <script defer src="/_vercel/insights/script.js"></script>
@@ -134,6 +144,15 @@
   <!-- ══ HERO SLIDESHOW ════════════════════════════════════ -->
   <section class="hero" id="hero" data-section="hero">
     <div class="hero-slides" id="heroSlides">
+      <!-- Real <img> for the opening frame. As a CSS background this image was
+           never taken as an LCP candidate, so the metric latched onto the first
+           slide change instead and reported ~5.5s. An <img> is a first-class
+           candidate: it is preloaded in <head>, paints immediately, and later
+           slides are the same size so none of them displaces it. -->
+      <picture>
+        <source media="(max-width: 768px)" srcset="/_vercel/image?url=%2Fassets%2Fimages%2Ft-shirt-landscape%2Fcyberpunk-view-9-16.png&amp;w=1080&amp;q=75">
+        <img class="hero-lcp" id="heroLcp" src="https://res.cloudinary.com/do2eltwlu/image/upload/w_1920,c_limit,f_auto,q_auto/assets/images/t-shirt-landscape/cyberpunk-view.png" alt="IkariTokyo — collezione streetwear anime" fetchpriority="high" decoding="async">
+      </picture>
       <div class="hero-slide is-active" data-img="https://res.cloudinary.com/do2eltwlu/image/upload/w_1920,c_limit,f_auto,q_auto/assets/images/t-shirt-landscape/cyberpunk-view.png" data-img-mobile="/_vercel/image?url=%2Fassets%2Fimages%2Ft-shirt-landscape%2Fcyberpunk-view-9-16.png&amp;w=1080&amp;q=75"></div>
       <div class="hero-slide" data-img="https://res.cloudinary.com/do2eltwlu/image/upload/w_1920,c_limit,f_auto,q_auto/assets/images/t-shirt-landscape/gym-zoro.png" data-img-mobile="/_vercel/image?url=%2Fassets%2Fimages%2Ft-shirt-landscape%2FGym-zoro-9-16.png&amp;w=1080&amp;q=75"></div>
       <div class="hero-slide" data-img="https://res.cloudinary.com/do2eltwlu/image/upload/w_1920,c_limit,f_auto,q_auto/assets/images/t-shirt-landscape/still-life-metro-odaiba.png" data-img-mobile="/_vercel/image?url=%2Fassets%2Fimages%2Ft-shirt-landscape%2Fstill-life-metro-odaiba-9-16.png&amp;w=1080&amp;q=75"></div>

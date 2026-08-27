@@ -283,7 +283,12 @@ function initHero() {
     });
   });
 
+  const heroLcp = document.getElementById('heroLcp');
+
   function goToSlide(n) {
+    // The opening <img> has done its job once the slideshow moves on; fade it
+    // out in step with the outgoing slide so it never shows through later.
+    if (heroLcp) heroLcp.classList.add('is-retired');
     slides[heroSlide].classList.remove('is-active');
     nums[heroSlide].classList.remove('is-active');
     heroSlide = (n + slides.length) % slides.length;

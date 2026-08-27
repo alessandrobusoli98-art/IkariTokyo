@@ -505,6 +505,22 @@ html.dark .sun-rays {
   position: absolute;
   inset: 0;
 }
+/* Opening frame: a real <img> so the browser has an LCP candidate to paint
+   straight away. It sits under the slides and fades out with the first
+   transition, after which the slideshow owns the hero on its own. */
+.hero-lcp {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 0;
+}
+.hero-lcp.is-retired {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
 .hero-slide {
   position: absolute;
   inset: 0;
